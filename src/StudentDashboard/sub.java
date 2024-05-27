@@ -188,13 +188,13 @@ public class sub extends javax.swing.JInternalFrame {
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("7:30 Am to 8:00 Am");
         jPanel13.add(jLabel31);
-        jLabel31.setBounds(30, 140, 220, 40);
+        jLabel31.setBounds(20, 130, 220, 40);
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(240, 240, 240));
         jLabel30.setText("Schedule:");
         jPanel13.add(jLabel30);
-        jLabel30.setBounds(20, 100, 180, 30);
+        jLabel30.setBounds(20, 100, 110, 30);
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(240, 240, 240));

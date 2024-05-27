@@ -75,14 +75,14 @@ public void deleteData(int id, String table) {
     try {
         String deleteQuery = "";
         switch (table) {
-            case "tbl_grade":
-                deleteQuery = "DELETE FROM tbl_grade WHERE g_id = ?";
+            case "tbl_grades":
+                deleteQuery = "DELETE FROM tbl_grades WHERE g_id = ?";
                 break;
-            case "tbl_studentlist":
-                deleteQuery = "DELETE FROM tbl_studentlist WHERE s_id = ?";
+            case "tbl_studentlists":
+                deleteQuery = "DELETE FROM tbl_studentlists WHERE s_id = ?";
                 break;
-            case "tbl_subject":
-                deleteQuery = "DELETE FROM tbl_subject WHERE c_id = ?";
+            case "tbl_subjects":
+                deleteQuery = "DELETE FROM tbl_subjects WHERE c_id = ?";
                 break;
             default:
                 System.out.println("Invalid table name for deletion.");
@@ -165,7 +165,7 @@ public ResultSet searchData(String table, String searchTerm) {
     try {
         // Construct the SQL query to search for data in the specified table based on a valid column
         // Replace 'valid_column_name' with the actual column name you want to search in
-        String sql = "SELECT * FROM " + table + "tbl_grade ?";
+        String sql = "SELECT * FROM " + table + "tbl_grades ?";
         
         // Create a PreparedStatement object to execute the query
         PreparedStatement pst = connect.prepareStatement(sql);
@@ -180,5 +180,22 @@ public ResultSet searchData(String table, String searchTerm) {
     }
     return resultSet;
 }
-  
+  public int countRows(String table) {
+        int rowCount = 0;
+        try {
+            String sql = "SELECT COUNT(*) AS row_count FROM " + table;
+            PreparedStatement pst = connect.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                rowCount = rs.getInt("row_count");
+            }
+            rs.close();
+            pst.close();
+        } catch (SQLException ex) {
+            System.out.println("Error counting rows: " + ex.getMessage());
+        }
+        return rowCount;
+    }
+
 }
+

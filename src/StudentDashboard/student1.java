@@ -34,7 +34,6 @@ public class student1 extends javax.swing.JInternalFrame {
         panel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         panel2 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -72,13 +71,6 @@ public class student1 extends javax.swing.JInternalFrame {
         jLabel16.setText("My Subjects");
         panel1.add(jLabel16);
         jLabel16.setBounds(40, 50, 150, 52);
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("8");
-        panel1.add(jLabel17);
-        jLabel17.setBounds(45, 110, 120, 52);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\user\\Downloads\\Rectangle 25 (4) (2).png")); // NOI18N
@@ -183,7 +175,6 @@ public class student1 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;

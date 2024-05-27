@@ -6,10 +6,16 @@
 package Dashboard;
 
 import config.dbConnector;
+import guidesign.Login;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import static javafx.scene.paint.Color.color;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -18,18 +24,17 @@ import net.proteanit.sql.DbUtils;
  */
 public class dashboardAdmin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form dashboardTeacher
-     */
+     
     public dashboardAdmin() {
         initComponents();
         displayData();
-       
+         displayActiveRowCount();
+         displayPendingRowCount();
     }
   public void displayData(){
        try{
            dbConnector dbc = new dbConnector();
-           ResultSet rs = dbc.getData("SELECT u_id,u_username,u_type,u_status FROM tbl_user");
+           ResultSet rs = dbc.getData("SELECT u_id,u_username,u_type,u_status FROM tbl_users");
           table.setModel(DbUtils.resultSetToTableModel(rs));
             
         }catch(SQLException ex){
@@ -37,6 +42,44 @@ public class dashboardAdmin extends javax.swing.JFrame {
         
        }
   }
+ // Method to display total row count of u_type "Active"
+    public void displayActiveRowCount() {
+        try {
+            dbConnector dbc = new dbConnector();
+            ResultSet rs = dbc.getData("SELECT COUNT(*) AS active_row_count FROM tbl_users WHERE u_status = 'Active'");
+            
+            if (rs.next()) {
+                int activeRowCount = rs.getInt("active_row_count");
+                
+                // Display the count in your UI
+                // For example, if you have a JLabel to display the count:
+              a.setText("" + activeRowCount);
+            }
+            
+        } catch(SQLException ex) {
+            System.out.println("Errors: "+ex.getMessage());
+        }
+    }
+  // Method to display total row count of u_status "Pending"
+    public void displayPendingRowCount() {
+        try {
+            dbConnector dbc = new dbConnector();
+            ResultSet rs = dbc.getData("SELECT COUNT(*) AS pending_row_count FROM tbl_users WHERE u_status = 'Pending'");
+            
+            if (rs.next()) {
+                int pendingRowCount = rs.getInt("pending_row_count");
+                
+                // Display the count in your UI
+                // For example, if you have a JLabel to display the count:
+                b.setText("" + pendingRowCount);
+            }
+            
+        } catch(SQLException ex) {
+            System.out.println("Errors: "+ex.getMessage());
+        }
+    }
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -54,19 +97,17 @@ public class dashboardAdmin extends javax.swing.JFrame {
         table = new javax.swing.JTable();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         panel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        b = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         panel1 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        a = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         edit = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        ref = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
+        sea1 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -114,6 +155,9 @@ public class dashboardAdmin extends javax.swing.JFrame {
 
         log.setBackground(new java.awt.Color(44, 95, 45));
         log.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 logMouseEntered(evt);
             }
@@ -174,41 +218,32 @@ public class dashboardAdmin extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "User ID", "Username", "Account Type", "Active Status", "Deactivate Account"
+                "User ID", "Username", "Account Type", "Active Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        table.setEnabled(false);
         table.setRowHeight(30);
         jScrollPane1.setViewportView(table);
 
-        jLabel23.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel23.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Account  Details");
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Analytics and statistics.png"))); // NOI18N
-
-        jTextField1.setBackground(new java.awt.Color(151, 188, 98));
-        jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.setText("Search");
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         panel2.setBackground(new java.awt.Color(151, 188, 98));
         panel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -221,12 +256,15 @@ public class dashboardAdmin extends javax.swing.JFrame {
         });
         panel2.setLayout(null);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel5.setText("       2");
-        panel2.add(jLabel5);
-        jLabel5.setBounds(90, 70, 110, 30);
+        b.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        b.setForeground(new java.awt.Color(255, 255, 255));
+        b.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        panel2.add(b);
+        b.setBounds(90, 70, 140, 30);
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Pending");
         panel2.add(jLabel6);
         jLabel6.setBounds(100, 20, 110, 30);
@@ -247,15 +285,18 @@ public class dashboardAdmin extends javax.swing.JFrame {
         });
         panel1.setLayout(null);
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel10.setText("       2");
-        panel1.add(jLabel10);
-        jLabel10.setBounds(90, 60, 110, 30);
+        a.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        a.setForeground(new java.awt.Color(255, 255, 255));
+        a.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        panel1.add(a);
+        a.setBounds(70, 70, 160, 30);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Active User");
         panel1.add(jLabel11);
-        jLabel11.setBounds(90, 20, 110, 30);
+        jLabel11.setBounds(70, 20, 170, 30);
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle 25 (4) (2).png"))); // NOI18N
         jLabel12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -265,16 +306,15 @@ public class dashboardAdmin extends javax.swing.JFrame {
         edit.setBackground(new java.awt.Color(151, 188, 98));
         edit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Edit (3).png"))); // NOI18N
-        jLabel16.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        sea1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 0), 1, true));
+        sea1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                sea1KeyReleased(evt);
+            }
+        });
 
-        ref.setBackground(new java.awt.Color(151, 188, 98));
-        ref.setLayout(null);
-
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Refresh (3).png"))); // NOI18N
-        jLabel13.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("Search");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -293,17 +333,15 @@ public class dashboardAdmin extends javax.swing.JFrame {
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGap(26, 26, 26)
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                                .addComponent(jLabel16)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel13)
-                                                .addGap(178, 178, 178)
-                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel23)
+                                        .addGap(62, 62, 62)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(sea1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(43, Short.MAX_VALUE))
@@ -312,11 +350,6 @@ public class dashboardAdmin extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                    .addContainerGap(444, Short.MAX_VALUE)
-                    .addComponent(ref, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(476, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,24 +360,23 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                     .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(21, 21, 21)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel23)
-                        .addGap(32, 32, 32)
+                        .addGap(77, 77, 77)
                         .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(64, 114, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel13)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(sea1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,11 +384,6 @@ public class dashboardAdmin extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                    .addContainerGap(324, Short.MAX_VALUE)
-                    .addComponent(ref, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(351, Short.MAX_VALUE)))
         );
 
         jPanel1.setBackground(new java.awt.Color(44, 95, 45));
@@ -398,36 +425,12 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void panel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel2MouseEntered
- 
-        panel2.setBackground(new Color(0, 168, 107));
-
-    }//GEN-LAST:event_panel2MouseEntered
-
-    private void panel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel2MouseExited
-   
-          panel2.setBackground (new Color(151,188,98));
-      
-    }//GEN-LAST:event_panel2MouseExited
-
-    private void panel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseEntered
-    panel1.setBackground(new Color(0, 168, 107)); 
-    }//GEN-LAST:event_panel1MouseEntered
-
-    private void panel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseExited
-   panel1.setBackground (new Color(151,188,98));
-    }//GEN-LAST:event_panel1MouseExited
 
     private void userMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userMouseEntered
   user.setBackground(new Color(0, 168, 107)); 
@@ -466,6 +469,59 @@ public class dashboardAdmin extends javax.swing.JFrame {
       
     }//GEN-LAST:event_logMouseReleased
 
+    private void sea1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sea1KeyReleased
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        table.setRowSorter(sorter); // Set the row sorter to the table
+
+        String regex = sea1.getText(); // Get the search text from the text field
+        try {
+            sorter.setRowFilter(RowFilter.regexFilter(regex));
+        } catch (java.util.regex.PatternSyntaxException ex) {
+            // Handle invalid regular expression syntax
+            System.err.println("Invalid regular expression: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_sea1KeyReleased
+
+    private void panel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseExited
+        panel1.setBackground (new Color(151,188,98));
+    }//GEN-LAST:event_panel1MouseExited
+
+    private void panel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseEntered
+        panel1.setBackground(new Color(0, 168, 107));
+    }//GEN-LAST:event_panel1MouseEntered
+
+    private void panel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel2MouseExited
+
+        panel2.setBackground (new Color(151,188,98));
+
+    }//GEN-LAST:event_panel2MouseExited
+
+    private void panel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel2MouseEntered
+
+        panel2.setBackground(new Color(0, 168, 107));
+    }//GEN-LAST:event_panel2MouseEntered
+
+    private void logMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logMouseClicked
+      // Display a message after logout without requiring user interaction
+        JOptionPane logoutMessage = new JOptionPane("You have been logged out successfully.", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = logoutMessage.createDialog("Logout Message");
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        // Set a timer to close the dialog after 2 seconds (2000 milliseconds)
+        Timer timer = new Timer(2000, e -> dialog.dispose());
+        timer.setRepeats(false); // Ensure the timer only runs once
+        timer.start();
+
+        // Show the dialog
+        dialog.setVisible(true);
+
+        Login lg = new Login();
+        lg.setVisible(true);
+        this.dispose();
+      
+    }//GEN-LAST:event_logMouseClicked
+    
     /**
      * @param args the command line arguments
      */
@@ -503,13 +559,12 @@ public class dashboardAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel a;
+    private javax.swing.JLabel b;
     private javax.swing.JPanel edit;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -524,11 +579,10 @@ public class dashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel log;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
-    private javax.swing.JPanel ref;
+    private javax.swing.JTextField sea1;
     private javax.swing.JTable table;
     private javax.swing.JPanel user;
     // End of variables declaration//GEN-END:variables

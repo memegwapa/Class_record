@@ -6,22 +6,27 @@
 package Student;
 
 
-import Dashboard.IndividualPrinting;
+
 import config.dbConnector;
 import function.edit;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,9 +34,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import net.proteanit.sql.DbUtils;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -40,7 +52,7 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  *
  * @author user
  */
-public class student extends javax.swing.JInternalFrame implements ActionListener, MouseListener {
+public class student extends javax.swing.JInternalFrame implements ActionListener, MouseListener, KeyListener {
   public String destination="";
 File selectedFile;
 public String oldpath;
@@ -51,13 +63,20 @@ public String path;
            this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0)); 
         BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI(); 
         bi.setNorthPane(null);
+          
+        // Set custom renderer for table header
+        JTableHeader header = userTable.getTableHeader();
+        header.setDefaultRenderer(new CustomHeaderRenderer());
+
+        // Set custom renderer for table columns
+        userTable.setDefaultRenderer(Object.class, new CustomColumnRenderer());
     }
       
   
   public void displayData(){
        try{
            dbConnector dbc = new dbConnector();
-           ResultSet rs = dbc.getData("SELECT *FROM tbl_studentlist");
+           ResultSet rs = dbc.getData("SELECT *FROM tbl_studentlists");
           userTable.setModel(DbUtils.resultSetToTableModel(rs));
             
         }catch(SQLException ex){
@@ -65,7 +84,36 @@ public String path;
         
        }
   }
- 
+  public class CustomColumnRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            // Change column background color
+            if (column % 2 == 0) {
+                cellComponent.setBackground(Color.GREEN);
+            } else {
+                cellComponent.setBackground(Color.GREEN);
+            }
+            return cellComponent;
+        }
+    }
+
+    public class CustomHeaderRenderer implements TableCellRenderer {
+        DefaultTableCellRenderer renderer;
+
+        public CustomHeaderRenderer() {
+            renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(JLabel.CENTER); // Center align header text
+            renderer.setBackground(Color.WHITE); // Set header background color
+            renderer.setForeground(Color.BLACK); // Set header text color
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+    }
+
 
   
 
@@ -87,7 +135,7 @@ public String path;
         Add = new JPanel();
         jLabel9 = new JLabel();
         jLabel11 = new JLabel();
-        jTextField1 = new JTextField();
+        sea1 = new JTextField();
         jLabel12 = new JLabel();
         jScrollPane1 = new JScrollPane();
         userTable = new JTable();
@@ -95,7 +143,7 @@ public String path;
         jLabel1 = new JLabel();
         delete = new JPanel();
         jLabel3 = new JLabel();
-        print = new JPanel();
+        jButton1 = new JButton();
         jLabel2 = new JLabel();
 
         jPanel1.setLayout(null);
@@ -113,6 +161,7 @@ public String path;
         jLabel8.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel8.setIcon(new ImageIcon(getClass().getResource("/images/Refresh (3).png"))); // NOI18N
         jLabel8.setVerticalAlignment(SwingConstants.BOTTOM);
+        jLabel8.addMouseListener(this);
         ref.add(jLabel8);
         jLabel8.setBounds(0, 0, 30, 30);
 
@@ -128,11 +177,10 @@ public String path;
         jLabel11.setForeground(new Color(255, 255, 255));
         jLabel11.setText("Student list");
 
-        jTextField1.setBackground(new Color(151, 188, 98));
-        jTextField1.setForeground(new Color(255, 255, 255));
-        jTextField1.setText("Search");
-        jTextField1.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(0, 0, 0)));
-        jTextField1.addActionListener(this);
+        sea1.setBorder(new LineBorder(new Color(51, 255, 0), 1, true));
+        sea1.addMouseListener(this);
+        sea1.addActionListener(this);
+        sea1.addKeyListener(this);
 
         userTable.setOpaque(false);
         jScrollPane1.setViewportView(userTable);
@@ -154,13 +202,15 @@ public String path;
         delete.add(jLabel3);
         jLabel3.setBounds(0, 0, 30, 30);
 
-        print.setBackground(new Color(151, 188, 98));
-        print.addMouseListener(this);
-        print.setLayout(null);
+        jButton1.setFont(new Font("Arial", 1, 12)); // NOI18N
+        jButton1.setIcon(new ImageIcon(getClass().getResource("/images/Print (8).png"))); // NOI18N
+        jButton1.setText("Print");
+        jButton1.setBorder(new LineBorder(new Color(51, 255, 0), 1, true));
+        jButton1.setHorizontalTextPosition(SwingConstants.LEFT);
+        jButton1.addActionListener(this);
 
-        jLabel2.setIcon(new ImageIcon(getClass().getResource("/images/Print (4).png"))); // NOI18N
-        print.add(jLabel2);
-        jLabel2.setBounds(0, 0, 30, 30);
+        jLabel2.setFont(new Font("Arial", 1, 12)); // NOI18N
+        jLabel2.setText("Search");
 
         GroupLayout panelLayout = new GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -169,7 +219,9 @@ public String path;
                 .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(147, 147, 147)
-                        .addComponent(jLabel11, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel11, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(129, 129, 129)
                         .addComponent(Add, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
@@ -179,10 +231,10 @@ public String path;
                         .addComponent(delete, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(ref, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(print, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78)
-                        .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE))
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, 0)
+                        .addComponent(sea1, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(121, 121, 121)
                         .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 588, GroupLayout.PREFERRED_SIZE)))
@@ -191,16 +243,20 @@ public String path;
         panelLayout.setVerticalGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel11, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
                 .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField1, GroupLayout.Alignment.LEADING)
-                        .addComponent(ref, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(edit, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Add, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(jLabel11, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))
+                    .addGroup(GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addComponent(sea1)
+                    .addComponent(ref, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(edit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Add, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(delete, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(print, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 436, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(152, Short.MAX_VALUE))
@@ -214,9 +270,24 @@ public String path;
     // Code for dispatching events from components to event handlers.
 
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == jTextField1) {
-            student.this.jTextField1ActionPerformed(evt);
+        if (evt.getSource() == sea1) {
+            student.this.sea1ActionPerformed(evt);
         }
+        else if (evt.getSource() == jButton1) {
+            student.this.jButton1ActionPerformed(evt);
+        }
+    }
+
+    public void keyPressed(KeyEvent evt) {
+    }
+
+    public void keyReleased(KeyEvent evt) {
+        if (evt.getSource() == sea1) {
+            student.this.sea1KeyReleased(evt);
+        }
+    }
+
+    public void keyTyped(KeyEvent evt) {
     }
 
     public void mouseClicked(MouseEvent evt) {
@@ -235,8 +306,8 @@ public String path;
         else if (evt.getSource() == jLabel3) {
             student.this.jLabel3MouseClicked(evt);
         }
-        else if (evt.getSource() == print) {
-            student.this.printMouseClicked(evt);
+        else if (evt.getSource() == jLabel8) {
+            student.this.jLabel8MouseClicked(evt);
         }
     }
 
@@ -253,9 +324,6 @@ public String path;
         else if (evt.getSource() == delete) {
             student.this.deleteMouseEntered(evt);
         }
-        else if (evt.getSource() == print) {
-            student.this.printMouseEntered(evt);
-        }
     }
 
     public void mouseExited(MouseEvent evt) {
@@ -271,20 +339,20 @@ public String path;
         else if (evt.getSource() == delete) {
             student.this.deleteMouseExited(evt);
         }
-        else if (evt.getSource() == print) {
-            student.this.printMouseExited(evt);
-        }
     }
 
     public void mousePressed(MouseEvent evt) {
+        if (evt.getSource() == sea1) {
+            student.this.sea1MousePressed(evt);
+        }
     }
 
     public void mouseReleased(MouseEvent evt) {
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void sea1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_sea1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_sea1ActionPerformed
 
     private void AddMouseEntered(MouseEvent evt) {//GEN-FIRST:event_AddMouseEntered
      Add.setBackground(new Color (0, 168, 107));
@@ -364,44 +432,14 @@ if(rowindex<0){
         int a = JOptionPane.showConfirmDialog(null, "Are you sure to delete ID: " + id);
         if (a == JOptionPane.YES_OPTION) {
             dbConnector dbc = new dbConnector();
-            int s_id = Integer.parseInt(id);
-            dbc.deleteData(s_id, "tbl_studentlist");
+            int ids = Integer.parseInt(id);
+            dbc.deleteData(ids,"tbl_studentlists");
             displayData();
         }
     }
 
 
     }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void printMouseClicked(MouseEvent evt) {//GEN-FIRST:event_printMouseClicked
-   
-        int rowindex = userTable.getSelectedRow();
-        if(rowindex < 0){
-            JOptionPane.showMessageDialog(null, "Please select an Item!");
-        }else{
-
-            try{
-                dbConnector dbc = new dbConnector();
-                TableModel tbl = userTable.getModel();
-                ResultSet rs = dbc.getData("SELECT * FROM tbl_studentlist WHERE s_id = "+tbl.getValueAt(rowindex,0)+"");
-                if(rs.next()){
-                    IndividualPrinting ipt = new IndividualPrinting ();
-                    ipt.uid.setText(""+rs.getInt("s_id "));
-                    ipt.fn.setText(""+rs.getString("s_fname"));
-                    ipt.ln.setText(""+rs.getString("s_lname"));
-                    ipt.age.setText(""+rs.getString("s_age"));
-                    ipt.gender.setText(""+rs.getString("s_gender"));
-                 
-                   ipt.setVisible(true);
-                     this.dispose();
-                }
-
-            }catch(SQLException ex){
-                System.out.println(""+ex);
-            }
-        }
-       
-    }//GEN-LAST:event_printMouseClicked
 
     private void deleteMouseEntered(MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
       delete.setBackground(new Color (0, 168, 107));
@@ -411,23 +449,48 @@ if(rowindex<0){
      delete.setBackground(new Color (151,188,98));
     }//GEN-LAST:event_deleteMouseExited
 
-    private void printMouseEntered(MouseEvent evt) {//GEN-FIRST:event_printMouseEntered
-     print.setBackground(new Color (0, 168, 107));
-    }//GEN-LAST:event_printMouseEntered
-
-    private void printMouseExited(MouseEvent evt) {//GEN-FIRST:event_printMouseExited
-       print.setBackground(new Color (151,188,98)); 
-    }//GEN-LAST:event_printMouseExited
-
     private void deleteMouseClicked(MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
  
     }//GEN-LAST:event_deleteMouseClicked
+
+    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      MessageFormat header = new MessageFormat("Student Details");
+    MessageFormat footer = new MessageFormat("Page {0,number,integer}");
+    try {
+        userTable.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+    } catch (java.awt.print.PrinterException e) {
+        System.err.format("Cannot print: %s%n", e.getMessage());
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void sea1MousePressed(MouseEvent evt) {//GEN-FIRST:event_sea1MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sea1MousePressed
+
+    private void sea1KeyReleased(KeyEvent evt) {//GEN-FIRST:event_sea1KeyReleased
+             DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+    userTable.setRowSorter(sorter); // Set the row sorter to the table
+
+    String regex = sea1.getText(); // Get the search text from the text field
+    try {
+        sorter.setRowFilter(RowFilter.regexFilter(regex));
+    } catch (java.util.regex.PatternSyntaxException ex) {
+        // Handle invalid regular expression syntax
+        System.err.println("Invalid regular expression: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_sea1KeyReleased
+
+    private void jLabel8MouseClicked(MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    displayData();
+    }//GEN-LAST:event_jLabel8MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     JPanel Add;
     JPanel delete;
     JPanel edit;
+    JButton jButton1;
     JLabel jLabel1;
     JLabel jLabel11;
     JLabel jLabel12;
@@ -437,10 +500,9 @@ if(rowindex<0){
     JLabel jLabel9;
     JPanel jPanel1;
     JScrollPane jScrollPane1;
-    JTextField jTextField1;
     JPanel panel;
-    JPanel print;
     JPanel ref;
+    JTextField sea1;
     JTable userTable;
     // End of variables declaration//GEN-END:variables
 }

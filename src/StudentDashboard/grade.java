@@ -33,25 +33,21 @@ public class grade extends javax.swing.JInternalFrame {
         jLabel39 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel44 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -89,13 +85,7 @@ public class grade extends javax.swing.JInternalFrame {
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Prelim");
         jPanel10.add(jLabel16);
-        jLabel16.setBounds(40, 160, 190, 41);
-
-        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel40.setText("Average: 89.9");
-        jPanel10.add(jLabel40);
-        jLabel40.setBounds(30, 120, 160, 41);
+        jLabel16.setBounds(40, 140, 190, 41);
 
         jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle 27 (8).png"))); // NOI18N
         jPanel10.add(jLabel41);
@@ -123,18 +113,12 @@ public class grade extends javax.swing.JInternalFrame {
         jPanel12.add(jLabel22);
         jLabel22.setBounds(20, 70, 230, 40);
 
-        jLabel44.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel44.setText("Average: 80");
-        jPanel12.add(jLabel44);
-        jLabel44.setBounds(60, 110, 160, 41);
-
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(240, 240, 240));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Midterm");
         jPanel12.add(jLabel18);
-        jLabel18.setBounds(50, 150, 190, 41);
+        jLabel18.setBounds(50, 130, 190, 41);
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle 27 (8).png"))); // NOI18N
         jPanel12.add(jLabel11);
@@ -150,18 +134,12 @@ public class grade extends javax.swing.JInternalFrame {
         jPanel11.add(jLabel25);
         jLabel25.setBounds(20, 80, 209, 40);
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel26.setText("Average: 89");
-        jPanel11.add(jLabel26);
-        jLabel26.setBounds(60, 120, 170, 30);
-
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(240, 240, 240));
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("Pre-Final ");
         jPanel11.add(jLabel27);
-        jLabel27.setBounds(20, 160, 190, 30);
+        jLabel27.setBounds(20, 140, 190, 30);
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(240, 240, 240));
@@ -187,13 +165,7 @@ public class grade extends javax.swing.JInternalFrame {
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("Final");
         jPanel13.add(jLabel31);
-        jLabel31.setBounds(30, 140, 200, 40);
-
-        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel30.setText("Average: 90");
-        jPanel13.add(jLabel30);
-        jLabel30.setBounds(50, 100, 150, 30);
+        jLabel31.setBounds(40, 120, 200, 40);
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(240, 240, 240));
@@ -299,19 +271,15 @@ public class grade extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

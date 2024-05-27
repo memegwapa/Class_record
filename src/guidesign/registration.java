@@ -23,6 +23,7 @@ public class registration extends javax.swing.JFrame {
      */
     public registration() {
         initComponents();
+       
     }
 
     public static String email, usname;
@@ -31,7 +32,7 @@ public class registration extends javax.swing.JFrame {
         dbConnector dbc = new dbConnector();
 
         try {
-            String query = "SELECT * FROM tbl_user  WHERE u_username = '" + un.getText() + "' OR u_email  = '" + em.getText() + "'";
+            String query = "SELECT * FROM tbl_users  WHERE u_username = '" + un.getText() + "' OR u_email  = '" + em.getText() + "'";
             ResultSet resultSet = dbc.getData(query);
 
             if (resultSet.next()) {
@@ -80,9 +81,6 @@ public class registration extends javax.swing.JFrame {
         lblpass = new javax.swing.JLabel();
         lblem1 = new javax.swing.JLabel();
         pass1 = new javax.swing.JPasswordField();
-        jPanel7 = new javax.swing.JPanel();
-        icon4 = new javax.swing.JLabel();
-        icon3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -97,34 +95,39 @@ public class registration extends javax.swing.JFrame {
         un = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        icon4 = new javax.swing.JLabel();
+        icon3 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(998, 639));
 
         jPanel1.setBackground(new java.awt.Color(44, 95, 45));
         jPanel1.setLayout(null);
 
-        jPanel4.setBackground(new java.awt.Color(151, 188, 98));
+        jPanel4.setBackground(new java.awt.Color(44, 95, 45));
+        jPanel4.setLayout(null);
 
-        em.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         em.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 102), 2, true));
         em.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emActionPerformed(evt);
             }
         });
+        jPanel4.add(em);
+        em.setBounds(308, 95, 210, 25);
 
-        ln.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ln.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 102), 2, true));
         ln.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lnActionPerformed(evt);
             }
         });
+        jPanel4.add(ln);
+        ln.setBounds(19, 172, 210, 25);
 
-        fn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         fn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 102), 2, true));
         fn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -136,8 +139,10 @@ public class registration extends javax.swing.JFrame {
                 fnActionPerformed(evt);
             }
         });
+        jPanel4.add(fn);
+        fn.setBounds(19, 95, 210, 25);
 
-        jPanel2.setBackground(new java.awt.Color(151, 188, 98));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel2MousePressed(evt);
@@ -155,9 +160,13 @@ public class registration extends javax.swing.JFrame {
         jPanel2.add(jLabel1);
         jLabel1.setBounds(0, 0, 132, 50);
 
+        jPanel4.add(jPanel2);
+        jPanel2.setBounds(200, 320, 153, 49);
+
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Choose Account Type");
+        jPanel4.add(jLabel3);
+        jLabel3.setBounds(188, 12, 180, 20);
 
         pass.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 102), 2, true));
         pass.addActionListener(new java.awt.event.ActionListener() {
@@ -165,8 +174,10 @@ public class registration extends javax.swing.JFrame {
                 passActionPerformed(evt);
             }
         });
+        jPanel4.add(pass);
+        pass.setBounds(311, 170, 210, 25);
 
-        jPanel6.setBackground(new java.awt.Color(151, 188, 98));
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setLayout(null);
 
         icon2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -177,7 +188,7 @@ public class registration extends javax.swing.JFrame {
             }
         });
         jPanel6.add(icon2);
-        icon2.setBounds(4, 0, 24, 24);
+        icon2.setBounds(0, 0, 30, 24);
 
         icon1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eye (1).png"))); // NOI18N
@@ -189,6 +200,9 @@ public class registration extends javax.swing.JFrame {
         jPanel6.add(icon1);
         icon1.setBounds(0, 0, 30, 24);
 
+        jPanel4.add(jPanel6);
+        jPanel6.setBounds(520, 170, 40, 25);
+
         at.setBackground(new java.awt.Color(151, 188, 98));
         at.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         at.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Teacher", "Student", "Admin" }));
@@ -198,14 +212,38 @@ public class registration extends javax.swing.JFrame {
                 atActionPerformed(evt);
             }
         });
+        jPanel4.add(at);
+        at.setBounds(220, 38, 110, 30);
 
-        lblfn.setForeground(new java.awt.Color(153, 255, 102));
+        lblfn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblfn.setForeground(new java.awt.Color(44, 95, 45));
+        lblfn.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblfnFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblfnFocusLost(evt);
+            }
+        });
+        jPanel4.add(lblfn);
+        lblfn.setBounds(19, 120, 200, 18);
 
-        lbluser.setForeground(new java.awt.Color(153, 255, 102));
+        lbluser.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lbluser.setForeground(new java.awt.Color(44, 95, 45));
+        jPanel4.add(lbluser);
+        lbluser.setBounds(19, 272, 200, 18);
 
-        lbln.setForeground(new java.awt.Color(153, 255, 102));
+        lbln.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lbln.setForeground(new java.awt.Color(44, 95, 45));
+        jPanel4.add(lbln);
+        lbln.setBounds(19, 197, 200, 18);
 
-        lblpass.setForeground(new java.awt.Color(153, 255, 102));
+        lblpass.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblpass.setForeground(new java.awt.Color(44, 95, 45));
+        jPanel4.add(lblpass);
+        lblpass.setBounds(308, 195, 250, 20);
+        jPanel4.add(lblem1);
+        lblem1.setBounds(1046, 197, 207, 18);
 
         pass1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 102), 2, true));
         pass1.addActionListener(new java.awt.event.ActionListener() {
@@ -213,65 +251,61 @@ public class registration extends javax.swing.JFrame {
                 pass1ActionPerformed(evt);
             }
         });
-
-        jPanel7.setBackground(new java.awt.Color(151, 188, 98));
-        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel7MouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel7MousePressed(evt);
-            }
-        });
-        jPanel7.setLayout(null);
-
-        icon4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hide.png"))); // NOI18N
-        icon4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                icon4MousePressed(evt);
-            }
-        });
-        jPanel7.add(icon4);
-        icon4.setBounds(0, 0, 24, 24);
-
-        icon3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eye (1).png"))); // NOI18N
-        icon3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                icon3MousePressed(evt);
-            }
-        });
-        jPanel7.add(icon3);
-        icon3.setBounds(0, 0, 24, 24);
+        jPanel4.add(pass1);
+        pass1.setBounds(311, 247, 210, 25);
 
         jLabel7.setText("First Name");
+        jPanel4.add(jLabel7);
+        jLabel7.setBounds(19, 81, 70, 14);
 
         jLabel8.setText("Last Name");
+        jPanel4.add(jLabel8);
+        jLabel8.setBounds(19, 158, 200, 14);
 
         jLabel9.setText("Username");
+        jPanel4.add(jLabel9);
+        jLabel9.setBounds(19, 233, 200, 14);
 
         jLabel11.setText("Confirm Password");
+        jPanel4.add(jLabel11);
+        jLabel11.setBounds(311, 233, 210, 14);
+        jPanel4.add(jLabel12);
+        jLabel12.setBounds(610, 32, 211, 0);
 
         jLabel13.setText("Password");
+        jPanel4.add(jLabel13);
+        jLabel13.setBounds(312, 156, 210, 14);
 
-        lblconpass.setForeground(new java.awt.Color(153, 255, 102));
+        lblconpass.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblconpass.setForeground(new java.awt.Color(44, 95, 45));
+        jPanel4.add(lblconpass);
+        lblconpass.setBounds(308, 272, 210, 18);
 
-        lblem.setForeground(new java.awt.Color(153, 255, 102));
+        lblem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblem.setForeground(new java.awt.Color(44, 95, 45));
+        jPanel4.add(lblem);
+        lblem.setBounds(311, 120, 210, 18);
 
         jLabel14.setText("Email");
+        jPanel4.add(jLabel14);
+        jLabel14.setBounds(308, 81, 70, 14);
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Already have an account?");
+        jPanel4.add(jLabel5);
+        jLabel5.setBounds(80, 390, 342, 39);
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Registration");
+        jPanel4.add(jLabel6);
+        jLabel6.setBounds(12, 36, 128, 39);
 
         un.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 102), 2, true));
+        jPanel4.add(un);
+        un.setBounds(19, 247, 210, 25);
 
-        jPanel3.setBackground(new java.awt.Color(151, 188, 98));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
@@ -280,147 +314,46 @@ public class registration extends javax.swing.JFrame {
         jPanel3.setLayout(null);
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 153, 51));
         jLabel4.setText("Login");
         jPanel3.add(jLabel4);
         jLabel4.setBounds(0, 0, 75, 35);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(fn)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ln)
-                                    .addComponent(lblfn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                                    .addComponent(lbln, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(un)
-                                    .addComponent(lbluser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(82, 82, 82)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(pass, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                                            .addComponent(lblpass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(0, 0, 0)
-                                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(lblconpass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(pass1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
-                                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(em, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, 0)
-                                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(169, 169, 169)
-                                .addComponent(jLabel3)))
-                        .addGap(67, 67, 67)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(436, 436, 436)
-                                .addComponent(lblem1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(70, 70, 70)
-                        .addComponent(at, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(189, 189, 189)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(72, 72, 72))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(0, 0, 0)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(at, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel7))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(lblfn, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(em, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(lblem, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(lblem1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addGap(0, 0, 0)
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(pass, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(0, 0, 0)
-                                        .addComponent(lblpass, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addGap(0, 0, 0)
-                                        .addComponent(ln, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, 0)
-                                        .addComponent(lbln, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel11)
-                                            .addComponent(jLabel9))
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(pass1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(un, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, 0)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblconpass, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbluser, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(24, 24, 24)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-        );
+        jPanel4.add(jPanel3);
+        jPanel3.setBounds(420, 390, 100, 38);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(null);
+
+        icon4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hide.png"))); // NOI18N
+        icon4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                icon4MousePressed(evt);
+            }
+        });
+        jPanel5.add(icon4);
+        icon4.setBounds(0, 10, 30, 20);
+
+        icon3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eye (1).png"))); // NOI18N
+        icon3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                icon3MousePressed(evt);
+            }
+        });
+        jPanel5.add(icon3);
+        icon3.setBounds(0, 6, 30, 24);
+
+        jPanel4.add(jPanel5);
+        jPanel5.setBounds(520, 240, 40, 30);
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle 3.png"))); // NOI18N
+        jPanel4.add(jLabel16);
+        jLabel16.setBounds(10, 4, 554, 470);
 
         jPanel1.add(jPanel4);
-        jPanel4.setBounds(408, 72, 560, 418);
+        jPanel4.setBounds(408, 72, 570, 480);
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(102, 84, 94));
@@ -432,7 +365,7 @@ public class registration extends javax.swing.JFrame {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Strong password.png"))); // NOI18N
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(20, 90, 450, 430);
+        jLabel10.setBounds(30, 30, 450, 430);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -442,75 +375,18 @@ public class registration extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lnActionPerformed
-
-    private void fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fnActionPerformed
-
-    private void emActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emActionPerformed
-
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-     
-      if (fn.getText().isEmpty() || ln.getText().isEmpty() || em.getText().isEmpty()
-            || un.getText().isEmpty() || pass.getText().isEmpty()) {
-        lblfn.setText("First Name is Required");
-        lbln.setText("Last Name is Required");
-        lbluser.setText("Username is Required");
-        lblem.setText("Email is Required");
-        lblpass.setText("Password is Required");
-        lblconpass.setText("Confirm Password is Required");
-    } else if (pass.getText().length() < 8) {
-        lblpass.setText("Password character should be 8 or more");
-        lblconpass.setText("");
-    } else if (!pass.getText().equals(pass1.getText())) {
-        lblconpass.setText("Passwords do not match");
-    } else if (duplicateCheck()) {
-        System.out.println("Duplicate Exist");
-    } else {
-        dbConnector dbc = new dbConnector();
-        try {
-            String ps = passwordHasher.hashPassword(pass.getText());
-            int result = dbc.insertData("INSERT INTO tbl_user(u_fname,u_lname, u_email, u_username, u_password, u_type, u_status) "
-                    + "VALUES ('" + fn.getText() + "', '" + ln.getText() + "', '" + em.getText() + "', '" + un.getText() + "', '" + ps + "', '" + at.getSelectedItem() + "', 'Pending')");
-            if (result == 1) {
-                JOptionPane.showMessageDialog(null, "Registration Success!");
-                Login Ig = new Login();
-                Ig.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Connection Error!");
-            }
-        } catch (NoSuchAlgorithmException ex) {
-            System.out.println("" + ex);
-        }
-    }
-    }//GEN-LAST:event_jLabel1MousePressed
-
-    private void icon3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon3MousePressed
-         icon4.setVisible(true);
-        icon3.setVisible(false);
-         
-        pass1.setEchoChar((char) 0);
-    }//GEN-LAST:event_icon3MousePressed
-
-    private void icon4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon4MousePressed
-      icon3.setVisible(true);
-        icon4.setVisible(false);
-   pass1.setEchoChar((char) 0);
-        
-    }//GEN-LAST:event_icon4MousePressed
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        Login lg = new Login();
+        lg.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel3MouseClicked
 
     private void pass1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pass1ActionPerformed
         // TODO add your handling code here:
@@ -520,13 +396,71 @@ public class registration extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_atActionPerformed
 
+    private void icon1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon1MousePressed
+        icon2.setVisible(true);
+        icon1.setVisible(false);
+        pass.setEchoChar('*');
+    }//GEN-LAST:event_icon1MousePressed
+
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passActionPerformed
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
-      
+
     }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+  if (fn.getText().isEmpty() || ln.getText().isEmpty() || em.getText().isEmpty()
+            || un.getText().isEmpty() || pass.getText().isEmpty()) {
+            lblfn.setText("First Name is Required");
+            lbln.setText("Last Name is Required");
+            lbluser.setText("Username is Required");
+            lblem.setText("Email is Required");
+            lblpass.setText("Password is Required");
+            lblconpass.setText("Confirm Password is Required");
+        } else if (pass.getText().length() < 8) {
+            lblpass.setText("Password character should be 8 or more");
+            lblconpass.setText("");
+        } else if (!pass.getText().equals(pass1.getText())) {
+            lblconpass.setText("Passwords do not match");
+        } else if (duplicateCheck()) {
+            System.out.println("Duplicate Exist");
+        } else {
+            dbConnector dbc = new dbConnector();
+            try {
+                String ps = passwordHasher.hashPassword(pass.getText());
+                int result = dbc.insertData("INSERT INTO tbl_users(u_fname,u_lname, u_email, u_username, u_password, u_type, u_status) "
+                    + "VALUES ('" + fn.getText() + "', '" + ln.getText() + "', '" + em.getText() + "', '" + un.getText() + "', '" + ps + "', '" + at.getSelectedItem() + "', 'Pending')");
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(null, "Registration Success!");
+                    Login Ig = new Login();
+                    Ig.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Connection Error!");
+                }
+            } catch (NoSuchAlgorithmException ex) {
+                System.out.println("" + ex);
+            }
+        }
+    }//GEN-LAST:event_jLabel1MousePressed
+
+    private void fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fnActionPerformed
+
+    private void fnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fnMousePressed
+
+    }//GEN-LAST:event_fnMousePressed
+
+    private void lnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lnActionPerformed
+
+    private void emActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emActionPerformed
 
     private void icon2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon2MousePressed
         icon1.setVisible(true);
@@ -534,30 +468,25 @@ public class registration extends javax.swing.JFrame {
         pass.setEchoChar((char) 0);
     }//GEN-LAST:event_icon2MousePressed
 
-    private void icon1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon1MousePressed
-          icon2.setVisible(true);
-        icon1.setVisible(false);
-         pass.setEchoChar('*');
-    }//GEN-LAST:event_icon1MousePressed
+    private void icon4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon4MousePressed
+        icon3.setVisible(true);
+        icon4.setVisible(false);
+        pass1.setEchoChar((char) 0);
+    }//GEN-LAST:event_icon4MousePressed
 
-    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel7MouseClicked
+    private void icon3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon3MousePressed
+        icon4.setVisible(true);
+        icon3.setVisible(false);
+        pass1.setEchoChar('*');
+    }//GEN-LAST:event_icon3MousePressed
 
-    private void jPanel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MousePressed
+    private void lblfnFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblfnFocusGained
      
-    }//GEN-LAST:event_jPanel7MousePressed
+    }//GEN-LAST:event_lblfnFocusGained
 
-    private void fnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fnMousePressed
-   
-      
-    }//GEN-LAST:event_fnMousePressed
-
-    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-     Login lg = new Login();
-     lg.setVisible(true);
-     this.dispose();
-    }//GEN-LAST:event_jPanel3MouseClicked
+    private void lblfnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblfnFocusLost
+    
+    }//GEN-LAST:event_lblfnFocusLost
 
     /**
      * @param args the command line arguments
@@ -608,6 +537,7 @@ public class registration extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -620,8 +550,8 @@ public class registration extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel lblconpass;
     private javax.swing.JLabel lblem;
     private javax.swing.JLabel lblem1;

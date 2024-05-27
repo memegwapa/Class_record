@@ -205,20 +205,20 @@ public class edit extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
+                .addGap(11, 11, 11)
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -279,7 +279,7 @@ gender=null;
         } else {
             if (action.equals("Add")) {
                 dbConnector dbc = new dbConnector();
-                int result = dbc.insertData("INSERT INTO tbl_studentlist (s_fname,s_lname,s_age,s_gender) VALUES ('" + fn.getText() + "', '" + ln.getText() + "', '" + age.getText() + "', '" + gender + "')");
+                int result = dbc.insertData("INSERT INTO tbl_studentlists (s_fname,s_lname,s_age,s_gender) VALUES ('" + fn.getText() + "', '" + ln.getText() + "', '" + age.getText() + "', '" + gender + "')");
                 if (result == 1) {
                     JOptionPane.showMessageDialog(null, "Successfully Saved!");
                     this.dispose();
@@ -288,7 +288,7 @@ gender=null;
                 }
             } else if (action.equals("Update")) {
                 dbConnector dbc = new dbConnector();
-                dbc.updateData("UPDATE tbl_studentlist SET s_fname = '" + fn.getText() + "',s_lname = '" + ln.getText() + "', s_gender = '" + gender + "' WHERE s_id  = '" + ids.getText() + "'");
+                dbc.updateData("UPDATE tbl_studentlists SET s_fname = '" + fn.getText() + "',s_lname = '" + ln.getText() + "',s_age = '" + age.getText() + "', s_gender = '" + gender + "' WHERE s_id  = '" + ids.getText() + "'");
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "No action selected!");

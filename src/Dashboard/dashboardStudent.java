@@ -22,9 +22,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -495,7 +497,20 @@ acc_name1.setText(""+sess.getIname());
     }//GEN-LAST:event_gradeMouseExited
 
     private void logMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logMouseClicked
-        Login lg= new Login();
+     // Display a message after logout without requiring user interaction
+        JOptionPane logoutMessage = new JOptionPane("You have been logged out successfully.", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = logoutMessage.createDialog("Logout Message");
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        // Set a timer to close the dialog after 2 seconds (2000 milliseconds)
+        Timer timer = new Timer(2000, e -> dialog.dispose());
+        timer.setRepeats(false); // Ensure the timer only runs once
+        timer.start();
+
+        // Show the dialog
+        dialog.setVisible(true);
+
+        Login lg = new Login();
         lg.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logMouseClicked
